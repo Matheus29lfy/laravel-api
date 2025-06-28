@@ -1,3 +1,4 @@
+# .github/workflows/deploy.yml
 name: Laravel CI + Deploy
 
 on:
@@ -25,10 +26,8 @@ jobs:
 
     - name: Executar comandos no servidor remoto
       run: |
-        ssh ubuntu@18.189.100.113 << 'EOF'
+        ssh ubuntu@3.138.174.128 << 'EOF'
           cd laravel-api
-          composer install --no-dev --optimize-autoloader
-          php artisan migrate --force
-          pkill -f "artisan serve" || true
-          nohup php artisan serve --host=0.0.0.0 --port=8000 > laravel.log 2>&1 &
+          docker compose down
+          docker compose up -d --build
         EOF
