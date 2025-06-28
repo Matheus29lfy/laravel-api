@@ -3,7 +3,7 @@ name: Laravel CI + Deploy
 
 on:
   push:
-    branches: [main]
+    branches: [master]
 
 jobs:
   deploy:
