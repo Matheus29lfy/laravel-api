@@ -16,9 +16,7 @@ jobs:
     - name: Configurar chave SSH
       run: |
         mkdir -p ~/.ssh
-        cat << 'EOF' > ~/.ssh/id_rsa
-        $EC2_SSH_KEY
-        EOF
+        printf "%s" "$EC2_SSH_KEY" > ~/.ssh/id_rsa
         chmod 600 ~/.ssh/id_rsa
         ssh-keyscan -H 3.138.174.128 >> ~/.ssh/known_hosts
       env:
