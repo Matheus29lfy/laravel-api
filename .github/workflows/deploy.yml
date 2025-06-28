@@ -18,11 +18,11 @@ jobs:
         mkdir -p ~/.ssh
         echo "${{ secrets.EC2_SSH_KEY }}" > ~/.ssh/id_rsa
         chmod 600 ~/.ssh/id_rsa
-        ssh-keyscan -H 18.189.100.113 >> ~/.ssh/known_hosts
+        ssh-keyscan -H 3.138.174.128 >> ~/.ssh/known_hosts
 
     - name: Enviar projeto para EC2
       run: |
-        rsync -avz --delete ./ ubuntu@18.189.100.113:/home/ubuntu/laravel-api
+        rsync -avz --delete ./ ubuntu@3.138.174.128:/home/ubuntu/laravel-api
 
     - name: Executar comandos no servidor remoto
       run: |
