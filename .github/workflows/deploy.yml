@@ -19,7 +19,7 @@ jobs:
         PRIVATE_KEY: ${{ secrets.EC2_SSH_KEY }}
       run: |
         mkdir -p ~/.ssh
-        echo "$PRIVATE_KEY" | tr -d '\r' > ~/.ssh/id_rsa
+        printf "%s\n" "$PRIVATE_KEY" > ~/.ssh/id_rsa
         chmod 600 ~/.ssh/id_rsa
         ssh-keyscan -H 3.138.174.128 >> ~/.ssh/known_hosts
 
