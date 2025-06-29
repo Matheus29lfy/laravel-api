@@ -27,15 +27,26 @@ jobs:
         # Verificação das permissões
         ls -la ~/.ssh
 
-    - name: Enviar projeto para EC2
+    - name: Instalar Docker e deploy
       run: |
-        rsync -avz --delete -e "ssh -o StrictHostKeyChecking=no -i ~/.ssh/id_rsa" \
-          ./ ubuntu@3.138.174.128:/home/ubuntu/laravel-api
+            ssh -o StrictHostKeyChecking=no -i ~/.ssh/id_rsa ubuntu@3.138.174.128 << 'EOF'
+              # Atualizar pacotes (opcional)
+              sudo apt-get update -qq
 
-    - name: Executar comandos no servidor remoto
-      run: |
-        ssh -o StrictHostKeyChecking=no -i ~/.ssh/id_rsa ubuntu@3.138.174.128 << 'EOF'
-          cd laravel-api
-          docker compose down
-          docker compose up -d --build
-        EOF
+              # Instalar Docker se não existir
+              if ! command -v docker &> /dev/null; then
+                sudo apt-get install -y docker.io docker-compose
+                sudo usermod -aG docker ubuntu
+              fi
+
+              # Reiniciar se necessário (após instalação do Docker)
+              if [ -f /var/run/reboot-required ]; then
+                sudo reboot
+                sleep 60  # Esperar o reboot
+              fi
+
+              # Deploy da aplicação
+              cd laravel-api
+              docker compose down
+              docker compose up -d --build
+            EOF
