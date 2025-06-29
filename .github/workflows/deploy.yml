@@ -27,12 +27,12 @@ jobs:
 
     - name: Testar conexão SSH
       run: |
-            ssh -o StrictHostKeyChecking=no -i ~/.ssh/id_rsa ubuntu@${{ secrets.EC2_HOST }} "echo Conexão SSH bem-sucedida!"
+          ssh -o StrictHostKeyChecking=no -i ~/.ssh/id_rsa ubuntu@3.138.174.128 "echo Conexão SSH bem-sucedida!"
 
     - name: Enviar projeto para EC2
       run: |
         rsync -avz --delete -e "ssh -o StrictHostKeyChecking=no -i ~/.ssh/id_rsa" \
-          ./ ubuntu@${{ secrets.EC2_HOST }}:/home/ubuntu/laravel-api
+          ./ ubuntu@3.138.174.128:/home/ubuntu/laravel-api
 
     - name: Executar comandos no servidor remoto
       run: |
