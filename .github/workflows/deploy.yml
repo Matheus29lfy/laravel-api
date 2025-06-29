@@ -19,11 +19,11 @@ jobs:
         EC2_SSH_KEY: ${{ secrets.EC2_SSH_KEY }}
       run: |
         mkdir -p ~/.ssh
-        cat <<EOF > ~/.ssh/id_rsa
-    $EC2_SSH_KEY
-    EOF
-        chmod 600 ~/.ssh/id_rsa
-        ssh-keyscan -H 3.138.174.128 >> ~/.ssh/known_hosts
+        cat > ~/.ssh/id_rsa <<'EOF'
+        ${EC2_SSH_KEY}
+        EOF
+            chmod 600 ~/.ssh/id_rsa
+            ssh-keyscan -H 3.138.174.128 >> ~/.ssh/known_hosts
 
     - name: Verificar existência do arquivo de chave
       run: |
