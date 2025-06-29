@@ -19,11 +19,13 @@ jobs:
         EC2_SSH_KEY: ${{ secrets.EC2_SSH_KEY }}
       run: |
         mkdir -p ~/.ssh
-        cat > ~/.ssh/id_rsa <<'EOF'
-        ${EC2_SSH_KEY}
-          EOF
-            chmod 600 ~/.ssh/id_rsa
-            ssh-keyscan -H 3.138.174.128 >> ~/.ssh/known_hosts
+        # Correção crítica: permissões mais restritas
+        umask 077
+        echo "$EC2_SSH_KEY" > ~/.ssh/id_rsa
+        chmod 600 ~/.ssh/id_rsa
+        ssh-keyscan -H 3.138.174.128 >> ~/.ssh/known_hosts
+        # Verificação das permissões
+        ls -la ~/.ssh
 
     - name: Enviar projeto para EC2
       run: |
@@ -32,7 +34,7 @@ jobs:
 
     - name: Executar comandos no servidor remoto
       run: |
-        ssh ubuntu@3.138.174.128 << 'EOF'
+        ssh -o StrictHostKeyChecking=no -i ~/.ssh/id_rsa ubuntu@3.138.174.128 << 'EOF'
           cd laravel-api
           docker compose down
           docker compose up -d --build
