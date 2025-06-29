@@ -25,14 +25,10 @@ jobs:
             chmod 600 ~/.ssh/id_rsa
             ssh-keyscan -H 3.138.174.128 >> ~/.ssh/known_hosts
 
-    - name: Verificar existência do arquivo de chave
-      run: |
-        ls -l ~/.ssh
-        file ~/.ssh/id_rsa
-
     - name: Enviar projeto para EC2
       run: |
-        rsync -avz --delete ./ ubuntu@3.138.174.128:/home/ubuntu/laravel-api
+        rsync -avz --delete -e "ssh -o StrictHostKeyChecking=no -i ~/.ssh/id_rsa" \
+          ./ ubuntu@${{ secrets.EC2_HOST }}:/home/ubuntu/laravel-api
 
     - name: Executar comandos no servidor remoto
       run: |
