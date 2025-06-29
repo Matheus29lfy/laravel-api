@@ -26,7 +26,7 @@ jobs:
             ssh-keyscan -H 3.138.174.128 >> ~/.ssh/known_hosts
 
     - name: Testar conexão SSH
-          run: |
+      run: |
             ssh -o StrictHostKeyChecking=no -i ~/.ssh/id_rsa ubuntu@${{ secrets.EC2_HOST }} "echo Conexão SSH bem-sucedida!"
 
     - name: Enviar projeto para EC2
