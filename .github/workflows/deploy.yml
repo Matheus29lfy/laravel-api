@@ -25,10 +25,6 @@ jobs:
             chmod 600 ~/.ssh/id_rsa
             ssh-keyscan -H 3.138.174.128 >> ~/.ssh/known_hosts
 
-    - name: Testar conexão SSH
-      run: |
-          ssh -o StrictHostKeyChecking=no -i ~/.ssh/id_rsa ubuntu@3.138.174.128 "echo Conexão SSH bem-sucedida!"
-
     - name: Enviar projeto para EC2
       run: |
         rsync -avz --delete -e "ssh -o StrictHostKeyChecking=no -i ~/.ssh/id_rsa" \
