@@ -21,7 +21,7 @@ jobs:
         mkdir -p ~/.ssh
         cat > ~/.ssh/id_rsa <<'EOF'
         ${EC2_SSH_KEY}
-        EOF
+          EOF
             chmod 600 ~/.ssh/id_rsa
             ssh-keyscan -H 3.138.174.128 >> ~/.ssh/known_hosts
 
