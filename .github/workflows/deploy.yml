@@ -51,6 +51,6 @@ jobs:
 
           # Subir app
           cd /home/ubuntu/laravel-api
-          docker compose down
-          docker compose up -d --build
+          docker-compose down
+          docker-compose up -d --build
         EOF
