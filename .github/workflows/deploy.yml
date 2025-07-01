@@ -31,7 +31,7 @@ jobs:
 
     - name: Enviar projeto para EC2 via rsync
       run: |
-        rsync -av --delete -e "ssh -i ~/.ssh/id_rsa -o StrictHostKeyChecking=no" ./ ubuntu@3.138.174.128:/home/ubuntu/laravel-api
+         rsync -av --delete --exclude vendor -e "ssh -i ~/.ssh/id_rsa -o StrictHostKeyChecking=no" ./ ubuntu@3.138.174.128:/home/ubuntu/laravel-api
 
     - name: Instalar Docker e rodar Docker Compose
       run: |
