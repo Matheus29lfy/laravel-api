@@ -47,7 +47,7 @@ jobs:
 
           # Subir containers Laravel (instala dependências via docker)
             cd /home/ubuntu/laravel-api
-            docker compose down
-            docker compose up -d --build
+            docker-compose down
+            docker-compose up -d --build
           EOF
 
